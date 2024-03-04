@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -eu
+[ "${BASH_VERSINFO[0]}" -ge 3 ] && set -o pipefail
+
+cat <<-EOM
+Manage gopls with asdf.
+
+- https://github.com/bry-guy/asdf-gopls/
+- https://github.com/golang/tools
+EOM
+

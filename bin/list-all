@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -eu
+[ "${BASH_VERSINFO[0]}" -ge 3 ] && set -o pipefail
+
+git ls-remote --tags https://github.com/golang/tools "gopls/*" |
+    awk -F'/' '{
+        tag = $4;
+        gsub(/^v/, "", tag);
+        gsub(/\^\{\}$/, "", tag);
+        print tag;
+    }' |
+    uniq |
+    sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n |
+    grep -vE '^1(\.0|\.0\.[0-9]|\.1|\.1rc[0-9]|\.1\.[0-9]|\.2|\.2rc[0-9]|\.2\.1|\.8.5rc5)?$' |
+    tr '\n' ' '
+
